@@ -5,7 +5,6 @@ from PIL import Image, ImageTk
 import requests 
 import threading 
 
-
 import decisonTree.py 
 class backEndProcess(object):
     def __init__ (self):
@@ -27,6 +26,14 @@ class backEndProcess(object):
         #attention label
         self.population_attention_data = []
         self.user_requested_emotion = None
+
+        #default attention rate
+        self.defaultAttentionRate = 56
+        #margin for attention rate
+        self.attentionMargin = 15
+        #error for face finding
+        self.errorMargin = 10
+
 
     def emotion_detection(image_path):
         emotion_key = self.emotion_key #"6e205c33cfde48eb88b1b1870d9957fe"
@@ -198,9 +205,9 @@ def attention_data_process(faceList):
     # if raw data is empty, hard code
     rateList = self.population_attention_data
     if(len(faceList)==0):
-        rateList.append(56)
+        rateList.append(self.defaultAttentionRate)
 
-    margin = 15
+    margin = self.attentionMargin
     centerX = imageHeight / 2
     centerY = imageWIdth / 2
     attentionTotal = 0
